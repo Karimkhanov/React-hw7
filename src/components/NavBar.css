@@ -25,6 +25,7 @@
   margin: 0;
   padding: 0;
   gap: 1.5rem;
+  align-items: center;
 }
 
 .nav-link {
@@ -56,4 +57,19 @@
 
 .nav-link.active {
   color: #646cff;
+}
+
+.nav-button {
+  background: none;
+  border: none;
+  color: #ffffff;
+  cursor: pointer;
+  font-size: 1.1rem;
+  font-family: inherit;
+  padding: 0;
+  transition: color 0.2s;
+}
+
+.nav-button:hover {
+  color: #c5c5c5;
 }

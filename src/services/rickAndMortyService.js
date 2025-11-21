@@ -1,6 +1,7 @@
 const API_BASE_URL = 'https://rickandmortyapi.com/api';
 
 export const rickAndMortyService = {
+  // Функция для поиска персонажей по имени
   searchCharacters: async (name) => {
     const response = await fetch(`${API_BASE_URL}/character/?name=${name}`);
     if (!response.ok) {
@@ -11,7 +12,8 @@ export const rickAndMortyService = {
     }
     return response.json();
   },
-
+  
+  // Функция для получения одного персонажа по ID
   getCharacterById: async (id) => {
     const response = await fetch(`${API_BASE_URL}/character/${id}`);
     if (!response.ok) {

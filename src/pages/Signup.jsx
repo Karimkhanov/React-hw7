@@ -4,13 +4,13 @@ import { useAuth } from '../contexts/AuthContext';
 import ErrorBox from '../components/ErrorBox';
 import './AuthForm.css';
 
-const Login = () => {
+const Signup = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
 
-  const { login } = useAuth();
+  const { signup } = useAuth();
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
@@ -19,11 +19,11 @@ const Login = () => {
     setLoading(true);
 
     try {
-      await login(email, password);
+      await signup(email, password);
       navigate('/profile');
     } catch (err) {
-      console.error("Firebase Login Error:", err);
-      setError('Failed to sign in. Please check your credentials.');
+      console.error("Firebase Signup Error:", err);
+      setError('Failed to create an account. The email might already be in use.');
     } finally {
       setLoading(false);
     }
@@ -31,7 +31,7 @@ const Login = () => {
 
   return (
     <div className="auth-container">
-      <h2>Log In</h2>
+      <h2>Sign Up</h2>
       {error && <ErrorBox message={error} />}
       <form onSubmit={handleSubmit} className="auth-form">
         <div className="form-group">
@@ -57,14 +57,14 @@ const Login = () => {
           />
         </div>
         <button disabled={loading} type="submit" className="auth-button">
-          {loading ? 'Logging In...' : 'Log In'}
+          {loading ? 'Signing Up...' : 'Sign Up'}
         </button>
       </form>
       <div className="auth-switch-text">
-        Need an account? <Link to="/signup">Sign Up</Link>
+        Already have an account? <Link to="/login">Log In</Link>
       </div>
     </div>
   );
 };
 
-export default Login;
+export default Signup;

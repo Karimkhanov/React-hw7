@@ -1,0 +1,58 @@
+// src/contexts/AuthContext.jsx
+
+import React, { createContext, useContext, useEffect, useState } from 'react';
+import {
+  createUserWithEmailAndPassword,
+  onAuthStateChanged,
+  signInWithEmailAndPassword,
+  signOut,
+} from 'firebase/auth';
+import { auth } from '../firebase';
+import Spinner from '../components/Spinner'; // Мы можем показывать спиннер на весь экран
+
+const AuthContext = createContext();
+
+export const useAuth = () => {
+  return useContext(AuthContext);
+};
+
+export const AuthProvider = ({ children }) => {
+  const [currentUser, setCurrentUser] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  const signup = (email, password) => {
+    return createUserWithEmailAndPassword(auth, email, password);
+  };
+
+  const login = (email, password) => {
+    return signInWithEmailAndPassword(auth, email, password);
+  };
+
+  const logout = () => {
+    return signOut(auth);
+  };
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      setCurrentUser(user);
+      setLoading(false);
+    });
+
+    return unsubscribe;
+  }, []);
+
+  const value = {
+    currentUser,
+    signup,
+    login,
+    logout,
+  };
+
+  // ИСПРАВЛЕНИЕ: Мы всегда рендерим Provider,
+  // а состояние загрузки можно использовать для отображения спиннера
+  return (
+    <AuthContext.Provider value={value}>
+      {loading ? <Spinner /> : children}
+    </AuthContext.Provider>
+  );
+};

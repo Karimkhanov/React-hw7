@@ -7,7 +7,7 @@ const RootLayout = () => {
     <>
       <NavBar />
       <main>
-        <Outlet />
+        <Outlet /> {/* Роутер будет вставлять нужную страницу */}
       </main>
     </>
   );
